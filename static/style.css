@@ -1,0 +1,504 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    background-image: url('/static/fundopc.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+.header {
+    background: #0b1e2a;
+    border-bottom: 3px solid #b2d45c;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.adult-swim {
+    color: #f0e14a;
+    font-size: 1.2rem;
+    font-weight: 900;
+    border-right: 2px solid #b2d45c;
+    padding-right: 20px;
+}
+
+.titulo-header {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.header-menu {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+}
+
+.header-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.header-menu a:hover {
+    color: #b2d45c;
+}
+
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+
+.jogo-content {
+    background: rgba(11, 30, 42, 0.7);
+    backdrop-filter: blur(5px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 2px solid #b2d45c;
+}
+
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 180px;
+    height: auto;
+}
+
+.titulo-principal {
+    text-align: center;
+    font-size: 2rem;
+    color: #b2d45c;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 #0b1e2a;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #f0e14a;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+
+.placar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 20px 0;
+    padding: 15px 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    border: 2px solid #b2d45c;
+}
+
+.placar-item {
+    text-align: center;
+    min-width: 100px;
+}
+
+.placar-item:first-child {
+    border-right: 2px solid #b2d45c;
+    padding-right: 30px;
+}
+
+.placar-icone {
+    font-size: 1.8rem;
+    display: block;
+}
+
+.placar-valor {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #b2d45c;
+    display: block;
+    line-height: 1.2;
+}
+
+.placar-label {
+    color: #f0e14a;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+
+.nivel-jogador, .sequencia {
+    text-align: center;
+    color: #f0e14a;
+    margin: 10px 0;
+}
+
+.sequencia span {
+    background: rgba(178, 212, 92, 0.3);
+    padding: 5px 15px;
+    border-radius: 30px;
+    border: 1px solid #b2d45c;
+    display: inline-block;
+}
+
+
+.mensagem-resultado {
+    text-align: center;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 40px;
+    font-weight: bold;
+    border: 2px solid #0b1e2a;
+}
+
+.msg-sucesso {
+    background: #b2d45c;
+    color: #0b1e2a;
+}
+
+.msg-erro {
+    background: #ff6b6b;
+    color: white;
+}
+
+
+.personagem-card {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    border: 2px solid #b2d45c;
+}
+
+.personagem-imagem {
+    flex: 0 0 140px;
+}
+
+.personagem-imagem img {
+    width: 100%;
+    border-radius: 12px;
+    border: 3px solid #b2d45c;
+}
+
+.personagem-dicas {
+    flex: 1;
+}
+
+.dica {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    border: 1px solid #b2d45c;
+}
+
+.dica-icone {
+    font-size: 1.2rem;
+    margin-right: 15px;
+    min-width: 30px;
+    color: #b2d45c;
+}
+
+.dica-label {
+    color: #f0e14a;
+    font-weight: 900;
+    min-width: 70px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.dica-valor {
+    color: white;
+    font-weight: bold;
+}
+
+.escolha-titulo {
+    text-align: center;
+    color: #b2d45c;
+    margin: 20px 0 15px;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+}
+
+
+.opcoes-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.opcao-btn {
+    background: #0b1e2a;
+    color: white;
+    border: 2px solid #b2d45c;
+    padding: 12px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.opcao-btn:hover {
+    background: #b2d45c;
+    color: #0b1e2a;
+}
+
+.botao-dica {
+    background: #f0e14a;
+    color: #0b1e2a;
+    border: 2px solid #0b1e2a;
+    padding: 10px 25px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto;
+    transition: 0.2s;
+}
+
+.botao-dica:hover {
+    background: #b2d45c;
+}
+
+#dica-texto {
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    background: #0b1e2a;
+    border-radius: 40px;
+    border: 2px solid #b2d45c;
+    color: #b2d45c;
+    display: none;
+}
+
+
+.novo-jogo-form {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-novo-jogo {
+    background: #b2d45c;
+    color: #0b1e2a;
+    border: 2px solid #0b1e2a;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-novo-jogo:hover {
+    background: #f0e14a;
+}
+
+
+.inicio-form {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.botao-jogar {
+    background: #b2d45c;
+    color: #0b1e2a;
+    border: 3px solid #0b1e2a;
+    padding: 15px 40px;
+    border-radius: 60px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 5px 0 #0b1e2a;
+    transition: 0.2s;
+}
+
+.botao-jogar:hover {
+    background: #f0e14a;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #0b1e2a;
+}
+
+.botao-seta {
+    font-size: 1.2rem;
+}
+
+
+.reset-form {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-reset {
+    background: #ff6b6b;
+    color: white;
+    border: 2px solid #0b1e2a;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-reset:hover {
+    background: #ff4757;
+}
+
+
+.historico {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+    border: 2px solid #b2d45c;
+}
+
+.historico h3 {
+    text-align: center;
+    color: #b2d45c;
+    margin-bottom: 15px;
+}
+
+.historico-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.historico-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    border: 1px solid #b2d45c;
+    color: white;
+}
+
+.historico-acerto {
+    border-left: 5px solid #b2d45c;
+}
+
+.historico-erro {
+    border-left: 5px solid #ff6b6b;
+}
+
+.historico-icone {
+    font-size: 1.1rem;
+}
+
+.historico-info {
+    flex: 1;
+    font-weight: bold;
+}
+
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    border-top: 2px solid #b2d45c;
+    color: #b2d45c;
+}
+
+/* responsividade */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .adult-swim {
+        border-right: none;
+        border-bottom: 2px solid #b2d45c;
+        padding-right: 0;
+        padding-bottom: 5px;
+    }
+    
+    .header-menu {
+        margin-left: 0;
+        justify-content: center;
+    }
+    
+    .personagem-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .personagem-imagem {
+        max-width: 140px;
+    }
+    
+    .dica {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .dica-icone {
+        margin-right: 0;
+    }
+    
+    .dica-label {
+        min-width: auto;
+    }
+    
+    .opcoes-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .placar {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .placar-item:first-child {
+        border-right: none;
+        border-bottom: 2px solid #b2d45c;
+        padding-right: 0;
+        padding-bottom: 10px;
+    }
+    
+    .titulo-principal {
+        font-size: 1.5rem;
+    }
+}

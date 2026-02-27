@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Rick And Morty - Portal Game</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="adult-swim">ADULT SWIM</div>
+        <div class="titulo-header">RICK AND MORTY</div>
+        <nav class="header-menu">
+            <a href="#">EPISÓDIOS</a>
+            <a href="#">CLIPS</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="jogo-content">
+            
+            
+            <h1 class="titulo-principal">QUEM É ESSE PERSONAGEM?</h1>
+         
+            {% if nivel %}
+            <div class="nivel-jogador">
+                {{ emoji_nivel }} Nível: {{ nivel }}
+            </div>
+            {% endif %}
+
+            {% if sequencia > 1 %}
+            <div class="sequencia">
+                <span>🔥 Sequência de {{ sequencia }} acertos! 🔥</span>
+            </div>
+            {% endif %}
+
+        
+            <div class="placar">
+                <div class="placar-item">
+                    <span class="placar-icone">⭐</span>
+                    <span class="placar-valor">{{ pontuacao }}</span>
+                    <span class="placar-label">Pontos</span>
+                </div>
+                <div class="placar-item">
+                    <span class="placar-icone">🎯</span>
+                    <span class="placar-valor">{{ tentativas }}</span>
+                    <span class="placar-label">Tentativas</span>
+                </div>
+                {% if total_jogos %}
+                <div class="placar-item">
+                    <span class="placar-icone">📊</span>
+                    <span class="placar-valor">{{ total_jogos }}</span>
+                    <span class="placar-label">Jogos</span>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if mensagem_resultado %}
+                <div class="mensagem-resultado {% if resultado == 'acertou' %}msg-sucesso{% else %}msg-erro{% endif %}">
+                    {{ mensagem_resultado }}
+                </div>
+            {% endif %}
+
+            {% if mostrar_jogo and personagem %}
+                <div class="jogo-area">
+                    <div class="personagem-card">
+                        <div class="personagem-imagem">
+                            <img src="{{ personagem.image }}" alt="{{ personagem.name }}">
+                        </div>
+                        
+                        <div class="personagem-dicas">
+                            <div class="dica">
+                                <span class="dica-icone">👽</span>
+                                <span class="dica-label">Espécie:</span>
+                                <span class="dica-valor">{{ personagem.species }}</span>
+                            </div>
+                            <div class="dica">
+                                <span class="dica-icone">❤️</span>
+                                <span class="dica-label">Status:</span>
+                                <span class="dica-valor">{{ personagem.status }}</span>
+                            </div>
+                            <div class="dica">
+                                <span class="dica-icone">⚥</span>
+                                <span class="dica-label">Gênero:</span>
+                                <span class="dica-valor">{{ personagem.gender }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+        
+                    <button class="botao-dica" onclick="buscarDica()" id="btn-dica">🔍 DICA</button>
+                    <div id="dica-texto"></div>
+
+                    <h3 class="escolha-titulo">Escolha o personagem:</h3>
+
+                    <form method="POST" class="opcoes-form" id="form-palpite">
+                        {% for opcao in opcoes %}
+                            <button type="submit" name="verificar" value="verificar" 
+                                    class="opcao-btn"
+                                    onclick="this.form.palpite.value='{{ opcao }}'">
+                                {{ opcao }}
+                            </button>
+                        {% endfor %}
+                        <input type="hidden" name="palpite" id="palpite" value="">
+                    </form>
+
+                    <form method="POST" class="novo-jogo-form">
+                        <button type="submit" name="iniciar_jogo" value="true" class="btn-novo-jogo">
+                            🔄 Novo Personagem
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                
+                <form method="POST" class="inicio-form">
+                    <button type="submit" name="iniciar_jogo" value="true" class="botao-jogar">
+                        <span class="botao-texto">COMEÇAR JOGO</span>
+                        <span class="botao-seta">▶</span>
+                    </button>
+                </form>
+            {% endif %}
+
+           
+            {% if historico %}
+            <div class="historico">
+                <h3>📋 Últimos resultados</h3>
+                <div class="historico-lista">
+                    {% for item in historico %}
+                    <div class="historico-item {% if item.resultado == 'acertou' %}historico-acerto{% else %}historico-erro{% endif %}">
+                        <span class="historico-icone">
+                            {% if item.resultado == 'acertou' %}✅{% else %}❌{% endif %}
+                        </span>
+                        <span class="historico-info">{{ item.personagem }}</span>
+                        {% if item.sequencia and item.sequencia > 1 %}
+                        <span class="historico-resultado">🔥 {{ item.sequencia }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            
+            <form method="POST" action="/reset" class="reset-form">
+                <button type="submit" class="btn-reset">🔄 Resetar Jogo</button>
+            </form>
+
+            
+            <div class="footer">
+                <p>© 2025 - Rick and Morty Fan Game</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.opcao-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                document.getElementById('palpite').value = this.textContent.trim();
+            });
+        });
+        
+        function buscarDica() {
+            fetch('/dica/{{ session.get("correto_id", 0) }}')
+                .then(response => response.json())
+                .then(data => {
+                    const dicaDiv = document.getElementById('dica-texto');
+                    dicaDiv.textContent = data.dica;
+                    dicaDiv.style.display = 'block';
+                    setTimeout(() => {
+                        dicaDiv.style.display = 'none';
+                    }, 5000);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dica:', error);
+                });
+        }
+    </script>
+</body>
+</html>
