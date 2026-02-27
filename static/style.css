@@ -502,3 +502,45 @@ body::before {
         font-size: 1.5rem;
     }
 }
+/* CORES DE FEEDBACK */
+.acertou {
+    background-color: #b2d45c !important;
+    color: #0b1e2a !important;
+    border: 3px solid #0b1e2a !important;
+    transition: all 0.3s;
+}
+
+.errou {
+    background-color: #ff6b6b !important;
+    color: white !important;
+    border: 3px solid #8b0000 !important;
+    transition: all 0.3s;
+}
+
+.personagem-correto-box {
+    background: #0b1e2a;
+    border: 3px solid #b2d45c;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    animation: piscar 1s;
+}
+
+.personagem-correto-box p {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.personagem-correto-box .nome {
+    color: #b2d45c;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+@keyframes piscar {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}

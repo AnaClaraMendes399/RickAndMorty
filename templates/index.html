@@ -56,37 +56,42 @@
                 {% endif %}
             </div>
 
-            {% if mensagem_resultado %}
-                <div class="mensagem-resultado {% if resultado == 'acertou' %}msg-sucesso{% else %}msg-erro{% endif %}">
-                    {{ mensagem_resultado }}
-                </div>
-            {% endif %}
+           {% if mensagem_resultado %}
+    <!-- MENSAGEM + NOME DO PERSONAGEM TUDO NA MESMA LINHA -->
+    <div class="mensagem-resultado {% if resultado == 'acertou' %}msg-sucesso{% else %}msg-erro{% endif %}" style="font-size: 0.9rem; padding: 8px 12px;">
+        {% if resultado == 'errou' and personagem_correto %}
+            {{ mensagem_resultado }} <strong style="font-size: 0.9rem;">(Era: {{ personagem_correto }})</strong>
+        {% else %}
+            {{ mensagem_resultado }}
+        {% endif %}
+    </div>
+{% endif %}
 
-            {% if mostrar_jogo and personagem %}
-                <div class="jogo-area">
-                    <div class="personagem-card">
-                        <div class="personagem-imagem">
-                            <img src="{{ personagem.image }}" alt="{{ personagem.name }}">
-                        </div>
-                        
-                        <div class="personagem-dicas">
-                            <div class="dica">
-                                <span class="dica-icone">👽</span>
-                                <span class="dica-label">Espécie:</span>
-                                <span class="dica-valor">{{ personagem.species }}</span>
-                            </div>
-                            <div class="dica">
-                                <span class="dica-icone">❤️</span>
-                                <span class="dica-label">Status:</span>
-                                <span class="dica-valor">{{ personagem.status }}</span>
-                            </div>
-                            <div class="dica">
-                                <span class="dica-icone">⚥</span>
-                                <span class="dica-label">Gênero:</span>
-                                <span class="dica-valor">{{ personagem.gender }}</span>
-                            </div>
-                        </div>
-                    </div>
+{% if mostrar_jogo and personagem %}
+    <div class="jogo-area">
+        <div class="personagem-card">
+            <div class="personagem-imagem">
+                <img src="{{ personagem.image }}" alt="{{ personagem.name }}">
+            </div>
+            
+            <div class="personagem-dicas">
+                <div class="dica">
+                    <span class="dica-icone">👽</span>
+                    <span class="dica-label">Espécie:</span>
+                    <span class="dica-valor">{{ personagem.species }}</span>
+                </div>
+                <div class="dica">
+                    <span class="dica-icone">❤️</span>
+                    <span class="dica-label">Status:</span>
+                    <span class="dica-valor">{{ personagem.status }}</span>
+                </div>
+                <div class="dica">
+                    <span class="dica-icone">⚥</span>
+                    <span class="dica-label">Gênero:</span>
+                    <span class="dica-valor">{{ personagem.gender }}</span>
+                </div>
+            </div>
+        </div>
 
         
                     <button class="botao-dica" onclick="buscarDica()" id="btn-dica">🔍 DICA</button>
@@ -154,27 +159,37 @@
     </div>
 
     <script>
-        document.querySelectorAll('.opcao-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                document.getElementById('palpite').value = this.textContent.trim();
-            });
-        });
+// Feedback visual imediato
+document.querySelectorAll('.opcao-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        // Pega o valor do botão clicado
+        const palpite = this.textContent.trim();
+        document.getElementById('palpite').value = palpite;
         
-        function buscarDica() {
-            fetch('/dica/{{ session.get("correto_id", 0) }}')
-                .then(response => response.json())
-                .then(data => {
-                    const dicaDiv = document.getElementById('dica-texto');
-                    dicaDiv.textContent = data.dica;
-                    dicaDiv.style.display = 'block';
-                    setTimeout(() => {
-                        dicaDiv.style.display = 'none';
-                    }, 5000);
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar dica:', error);
-                });
-        }
-    </script>
+        // Feedback visual no botão clicado
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 200);
+    });
+});
+
+// Função de dica (já existente)
+function buscarDica() {
+    fetch('/dica/{{ session.get("correto_id", 0) }}')
+        .then(response => response.json())
+        .then(data => {
+            const dicaDiv = document.getElementById('dica-texto');
+            dicaDiv.textContent = data.dica;
+            dicaDiv.style.display = 'block';
+            setTimeout(() => {
+                dicaDiv.style.display = 'none';
+            }, 5000);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dica:', error);
+        });
+}
+</script>
 </body>
 </html>
