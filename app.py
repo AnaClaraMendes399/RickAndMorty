@@ -188,7 +188,7 @@ def home():
                 mensagem_resultado = random.choice(frases_acerto)
                 mensagem_resultado += f" +{pontos_ganhos} pts!"
                 
-                # Adicionar ao ranking
+                # Adicionar ao ranking (usando a variável global)
                 if session.get('pontuacao') > 0:
                     ranking.append({
                         'nome': 'Jogador',
@@ -197,9 +197,10 @@ def home():
                         'dificuldade': session.get('dificuldade', 'facil')
                     })
                     # Manter apenas top 10
-                    global ranking
                     ranking.sort(key=lambda x: x['pontuacao'], reverse=True)
-                    ranking = ranking[:10]
+                    # Limitar para 10 itens
+                    while len(ranking) > 10:
+                        ranking.pop()
                 
                 if 'historico' in session:
                     session['historico'].append({

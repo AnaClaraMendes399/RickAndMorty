@@ -51,7 +51,7 @@
             
             <!-- Timer para modo tempo -->
             {% if modo_atual == 'tempo' and tempo_restante > 0 and mostrar_jogo %}
-            <div class="timer">
+            <div class="timer" data-tempo-restante="{{ tempo_restante }}">
                 <div class="timer-bar" style="width: {{ (tempo_restante / 30) * 100 }}%"></div>
                 <span class="timer-text">⏱️ Tempo: {{ tempo_restante }}s</span>
             </div>
@@ -126,7 +126,7 @@
                     </div>
                 </div>
 
-                <button class="botao-dica" onclick="buscarDica()" id="btn-dica">🔍 DICA</button>
+                <button class="botao-dica" data-personagem-id="{{ session.get('correto_id', 0) }}">🔍 DICA</button>
                 <div id="dica-texto" class="dica-texto"></div>
 
                 <h3 class="escolha-titulo">Escolha o personagem:</h3>
@@ -135,7 +135,7 @@
                     {% for opcao in opcoes %}
                         <button type="submit" name="verificar" value="verificar" 
                                 class="opcao-btn"
-                                onclick="this.form.palpite.value='{{ opcao }}'">
+                                data-palpite="{{ opcao }}">
                             {{ opcao }}
                         </button>
                     {% endfor %}
@@ -224,13 +224,15 @@
         </div>
     </div>
 
-    <script>
-        // Variáveis do servidor passadas para JavaScript
-        var modoAtual = "{{ modo_atual }}";
-        var tempoRestanteInicial = {{ tempo_restante }};
-        var mostrarJogo = {{ 'true' if mostrar_jogo else 'false' }};
-        var corretoId = {{ session.get('correto_id', 0) }};
-    </script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Dados do servidor como atributos data -->
+    <div id="game-data" 
+         data-modo-atual="{{ modo_atual }}"
+         data-tempo-restante="{{ tempo_restante }}"
+         data-mostrar-jogo="{{ mostrar_jogo }}"
+         data-correto-id="{{ session.get('correto_id', 0) }}"
+         style="display: none;">
+    </div>
+    
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
 </body>
 </html>
